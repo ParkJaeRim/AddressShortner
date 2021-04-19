@@ -1,10 +1,9 @@
 package com.jaerim.shorten.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -15,22 +14,21 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Address {
-       
+
     @Id
-    // @Indexed
     private long id;
     
-    //second index 지원
-    private String longaddress;
+    @Indexed
+    private String shortkey;
     
-    // @Indexed
-    //필드값으로 데이터를 찾을 수 있음 findbyShortaddress
-    private String shortaddress;
+    private String longaddress;
+
+    // 필드값으로 데이터를 찾을 수 있음 findbyShortaddress
 
     @Builder
-    public Address(String longaddress, String shortaddress, long id) {
+    public Address(String longaddress, String shortkey, long id) {
         this.longaddress = longaddress;
-        this.shortaddress = shortaddress;
+        this.shortkey = shortkey;
         this.id = id;
     }
 }
